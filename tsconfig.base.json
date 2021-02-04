@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@markf/ffmpeg-lib": ["libs/ffmpeg-lib/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

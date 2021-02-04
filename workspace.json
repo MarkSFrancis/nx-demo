@@ -1,10 +1,176 @@
 {
-  
-  
   "version": 2,
-  
-  "projects": {},
   "cli": {
-    "defaultCollection": "@nrwl/workspace"
-  }
+    "defaultCollection": "@nrwl/node"
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "none",
+        "linter": "eslint",
+        "babel": true
+      },
+      "component": {
+        "style": "none"
+      },
+      "library": {
+        "style": "none",
+        "linter": "eslint"
+      }
+    },
+    "@nrwl/next": {
+      "application": {
+        "style": "css",
+        "linter": "eslint"
+      }
+    }
+  },
+  "projects": {
+    "todos": {
+      "root": "apps/todos",
+      "sourceRoot": "apps/todos/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/todos",
+            "index": "apps/todos/src/index.html",
+            "main": "apps/todos/src/main.tsx",
+            "polyfills": "apps/todos/src/polyfills.ts",
+            "tsConfig": "apps/todos/tsconfig.app.json",
+            "assets": ["apps/todos/src/favicon.ico", "apps/todos/src/assets"],
+            "styles": [],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/todos/src/environments/environment.ts",
+                  "with": "apps/todos/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "todos:build"
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "todos:build:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/todos/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/todos"],
+          "options": {
+            "jestConfig": "apps/todos/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "todo-api": {
+      "root": "apps/todo-api",
+      "sourceRoot": "apps/todo-api/src",
+      "projectType": "application",
+      "prefix": "todo-api",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/todo-api",
+            "main": "apps/todo-api/src/main.ts",
+            "tsConfig": "apps/todo-api/tsconfig.app.json",
+            "assets": ["apps/todo-api/src/assets"],
+            "externalDependencies": ["ffmpeg-static", "fluent-ffmpeg"],
+            "generatePackageJson": true
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "apps/todo-api/src/environments/environment.ts",
+                  "with": "apps/todo-api/src/environments/environment.prod.ts"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/node:execute",
+          "options": {
+            "buildTarget": "todo-api:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/todo-api/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/todo-api"],
+          "options": {
+            "jestConfig": "apps/todo-api/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "ffmpeg-lib": {
+      "root": "libs/ffmpeg-lib",
+      "sourceRoot": "libs/ffmpeg-lib/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/ffmpeg-lib/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/ffmpeg-lib"],
+          "options": {
+            "jestConfig": "libs/ffmpeg-lib/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "todos"
 }
