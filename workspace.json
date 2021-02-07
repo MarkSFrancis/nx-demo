@@ -147,6 +147,12 @@
             "jestConfig": "apps/todo-api/jest.config.js",
             "passWithNoTests": true
           }
+        },
+        "echo": {
+          "executor": "./tools/builders/echo:echo",
+          "options": {
+            "textToEcho": "Hello World"
+          }
         }
       }
     },
